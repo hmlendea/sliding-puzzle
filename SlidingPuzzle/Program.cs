@@ -1,5 +1,6 @@
-﻿using System;
-using Gtk;
+﻿using Gtk;
+
+using SlidingPuzzle.Views;
 
 namespace SlidingPuzzle
 {
@@ -8,8 +9,10 @@ namespace SlidingPuzzle
         public static void Main(string[] args)
         {
             Application.Init();
-            MainWindow win = new MainWindow();
-            win.Show();
+
+            GameWindow window = new GameWindow();
+            window.Show();
+
             Application.Run();
         }
     }
