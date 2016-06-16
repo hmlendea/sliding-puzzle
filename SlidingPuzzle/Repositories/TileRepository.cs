@@ -65,7 +65,7 @@ namespace SlidingPuzzle.Repositories
         /// <param name="number">Number.</param>
         public Tile Get(int number)
         {
-            Tile tile = Tiles.Find(E => E.Number = number);
+            Tile tile = Tiles.Find(E => E.Number == number);
 
             if (tile == null)
                 throw new RepositoryException("A tile with the specified coordinates does not exist");
