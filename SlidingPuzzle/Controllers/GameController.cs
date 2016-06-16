@@ -39,6 +39,24 @@ namespace SlidingPuzzle.Controllers
         }
 
         /// <summary>
+        /// Moves the tile.
+        /// </summary>
+        /// <param name="xDelta">X delta.</param>
+        /// <param name="yDelta">Y delta.</param>
+        public void MoveTile(int xDelta, int yDelta)
+        {
+            Tile tile = repository.Get(GameInfo.TilesCount);
+
+            if (tile.X + xDelta >= GameInfo.TableSize || tile.X + xDelta < 0)
+                return; //throw new ArgumentException("Invalid X delta");
+
+            if (tile.Y + yDelta >= GameInfo.TableSize || tile.Y + yDelta < 0)
+                return; //throw new ArgumentException("Invalid Y delta");
+
+            SwapTiles(tile.X, tile.Y, tile.X + xDelta, tile.Y + yDelta);
+        }
+
+        /// <summary>
         /// Gets the tile.
         /// </summary>
         /// <returns>The tile.</returns>
@@ -84,18 +102,21 @@ namespace SlidingPuzzle.Controllers
 
                 if ((x1 != GameInfo.TableSize - 1 || y1 != GameInfo.TableSize - 1) &&
                     (x2 != GameInfo.TableSize - 1 || y2 != GameInfo.TableSize - 1))
-                {
-                    Tile tile1 = repository.Get(x1, y1);
-                    Tile tile2 = repository.Get(x2, y2);
-
-                    int aux = tile1.Number;
-                    tile1.Number = tile2.Number;
-                    tile2.Number = aux;
-
-                    repository.Update(tile1);
-                    repository.Update(tile2);
-                }
+                    SwapTiles(x1, x2, y1, y2);
             }
+        }
+
+        void SwapTiles(int x1, int y1, int x2, int y2)
+        {
+            Tile tile1 = repository.Get(x1, y1);
+            Tile tile2 = repository.Get(x2, y2);
+
+            int aux = tile1.Number;
+            tile1.Number = tile2.Number;
+            tile2.Number = aux;
+
+            repository.Update(tile1);
+            repository.Update(tile2);
         }
 
         bool OnGameTimerTick()

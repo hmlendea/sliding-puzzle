@@ -67,24 +67,28 @@ namespace SlidingPuzzle.Views
                 case Gdk.Key.w:
                 case Gdk.Key.W:
                 case Gdk.Key.Up:
+                    game.MoveTile(0, -1);
                     validKeyPressed = true;
                     break;
 
                 case Gdk.Key.a:
                 case Gdk.Key.A:
                 case Gdk.Key.Left:
+                    game.MoveTile(-1, 0);
                     validKeyPressed = true;
                     break;
 
                 case Gdk.Key.s:
                 case Gdk.Key.S:
                 case Gdk.Key.Down:
+                    game.MoveTile(0, 1);
                     validKeyPressed = true;
                     break;
 
                 case Gdk.Key.d:
                 case Gdk.Key.D:
                 case Gdk.Key.Right:
+                    game.MoveTile(1, 0);
                     validKeyPressed = true;
                     break;
             }
