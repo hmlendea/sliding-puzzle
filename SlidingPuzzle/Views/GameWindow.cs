@@ -120,8 +120,13 @@ namespace SlidingPuzzle.Views
 
                         Rectangle tileRectangle = new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
 
-                        g.FillRectangle(Brushes.Black, tileRectangle); // TODO: Draw image piece instead
-                        g.DrawString(tile.Number.ToString(), font, Brushes.IndianRed, tileRectangle, strFormat);
+                        if (tile.Number != (int)Math.Pow(game.GameInfo.TableSize, 2))
+                        {
+                            g.FillRectangle(Brushes.Black, tileRectangle); // TODO: Draw image piece instead
+                            g.DrawString(tile.Number.ToString(), font, Brushes.IndianRed, tileRectangle, strFormat);
+                        }
+                        else
+                            g.FillRectangle(Brushes.Gray, tileRectangle); // TODO: Draw image piece instead
                     }
             }
         }

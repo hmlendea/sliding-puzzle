@@ -43,7 +43,6 @@ namespace SlidingPuzzle.Views
 			// Container child SlidingPuzzle.Views.GameWindow.Gtk.Container+ContainerChild
 			this.vbox1 = new global::Gtk.VBox ();
 			this.vbox1.Name = "vbox1";
-			this.vbox1.Spacing = 6;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.UIManager.AddUiFromString ("<ui><menubar name='GameMenuBar'><menu name='GameAction' action='GameAction'><menuitem name='NewAction' action='NewAction'/><menuitem name='RetryAction' action='RetryAction'/></menu></menubar></ui>");
 			this.GameMenuBar = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/GameMenuBar")));
