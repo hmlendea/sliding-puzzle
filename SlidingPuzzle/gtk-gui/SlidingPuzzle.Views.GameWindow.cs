@@ -10,6 +10,8 @@ namespace SlidingPuzzle.Views
 		
 		private global::Gtk.Action NewAction;
 		
+		private global::Gtk.Action RetryAction;
+		
 		private global::Gtk.VBox vbox1;
 		
 		private global::Gtk.MenuBar GameMenuBar;
@@ -28,6 +30,9 @@ namespace SlidingPuzzle.Views
 			this.NewAction = new global::Gtk.Action ("NewAction", global::Mono.Unix.Catalog.GetString ("New"), null, null);
 			this.NewAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("New");
 			w1.Add (this.NewAction, null);
+			this.RetryAction = new global::Gtk.Action ("RetryAction", global::Mono.Unix.Catalog.GetString ("Retry"), null, null);
+			this.RetryAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Retry");
+			w1.Add (this.RetryAction, null);
 			this.UIManager.InsertActionGroup (w1, 0);
 			this.AddAccelGroup (this.UIManager.AccelGroup);
 			this.Name = "SlidingPuzzle.Views.GameWindow";
@@ -40,7 +45,7 @@ namespace SlidingPuzzle.Views
 			this.vbox1.Name = "vbox1";
 			this.vbox1.Spacing = 6;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString ("<ui><menubar name='GameMenuBar'><menu name='GameAction' action='GameAction'><menuitem name='NewAction' action='NewAction'/></menu></menubar></ui>");
+			this.UIManager.AddUiFromString ("<ui><menubar name='GameMenuBar'><menu name='GameAction' action='GameAction'><menuitem name='NewAction' action='NewAction'/><menuitem name='RetryAction' action='RetryAction'/></menu></menubar></ui>");
 			this.GameMenuBar = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/GameMenuBar")));
 			this.GameMenuBar.Name = "GameMenuBar";
 			this.vbox1.Add (this.GameMenuBar);
@@ -64,7 +69,9 @@ namespace SlidingPuzzle.Views
 			this.DefaultHeight = 530;
 			this.Show ();
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
+			this.KeyPressEvent += new global::Gtk.KeyPressEventHandler (this.OnKeyPressEvent);
 			this.NewAction.Activated += new global::System.EventHandler (this.OnNewActionActivated);
+			this.RetryAction.Activated += new global::System.EventHandler (this.OnRetryActionActivated);
 		}
 	}
 }
