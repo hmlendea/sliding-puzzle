@@ -4,19 +4,67 @@ namespace SlidingPuzzle.Views
 {
 	public partial class GameWindow
 	{
+		private global::Gtk.UIManager UIManager;
+		
+		private global::Gtk.Action GameAction;
+		
+		private global::Gtk.Action NewAction;
+		
+		private global::Gtk.VBox vbox1;
+		
+		private global::Gtk.MenuBar GameMenuBar;
+		
+		private global::Gtk.DrawingArea GameDrawArea;
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
 			// Widget SlidingPuzzle.Views.GameWindow
+			this.UIManager = new global::Gtk.UIManager ();
+			global::Gtk.ActionGroup w1 = new global::Gtk.ActionGroup ("Default");
+			this.GameAction = new global::Gtk.Action ("GameAction", global::Mono.Unix.Catalog.GetString ("Game"), null, null);
+			this.GameAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Game");
+			w1.Add (this.GameAction, null);
+			this.NewAction = new global::Gtk.Action ("NewAction", global::Mono.Unix.Catalog.GetString ("New"), null, null);
+			this.NewAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("New");
+			w1.Add (this.NewAction, null);
+			this.UIManager.InsertActionGroup (w1, 0);
+			this.AddAccelGroup (this.UIManager.AccelGroup);
 			this.Name = "SlidingPuzzle.Views.GameWindow";
-			this.Title = global::Mono.Unix.Catalog.GetString ("GameWindow");
-			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+			this.Title = global::Mono.Unix.Catalog.GetString ("Slider Puzzle");
+			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
+			this.Resizable = false;
+			this.AllowGrow = false;
+			// Container child SlidingPuzzle.Views.GameWindow.Gtk.Container+ContainerChild
+			this.vbox1 = new global::Gtk.VBox ();
+			this.vbox1.Name = "vbox1";
+			this.vbox1.Spacing = 6;
+			// Container child vbox1.Gtk.Box+BoxChild
+			this.UIManager.AddUiFromString ("<ui><menubar name='GameMenuBar'><menu name='GameAction' action='GameAction'><menuitem name='NewAction' action='NewAction'/></menu></menubar></ui>");
+			this.GameMenuBar = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/GameMenuBar")));
+			this.GameMenuBar.Name = "GameMenuBar";
+			this.vbox1.Add (this.GameMenuBar);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.GameMenuBar]));
+			w2.Position = 0;
+			w2.Expand = false;
+			w2.Fill = false;
+			// Container child vbox1.Gtk.Box+BoxChild
+			this.GameDrawArea = new global::Gtk.DrawingArea ();
+			this.GameDrawArea.WidthRequest = 480;
+			this.GameDrawArea.HeightRequest = 480;
+			this.GameDrawArea.Name = "GameDrawArea";
+			this.vbox1.Add (this.GameDrawArea);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.GameDrawArea]));
+			w3.Position = 1;
+			this.Add (this.vbox1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 400;
-			this.DefaultHeight = 300;
+			this.DefaultWidth = 480;
+			this.DefaultHeight = 530;
 			this.Show ();
+			this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
+			this.NewAction.Activated += new global::System.EventHandler (this.OnNewActionActivated);
 		}
 	}
 }
