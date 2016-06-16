@@ -74,7 +74,7 @@ namespace SlidingPuzzle.Controllers
             int i;
             Random rnd = new Random();
 
-            for (i = 0; i < Math.Pow(GameInfo.TableSize, 2); i++)
+            for (i = 0; i < GameInfo.TilesCount; i++)
             {
                 int x1 = rnd.Next(0, GameInfo.TableSize);
                 int y1 = rnd.Next(0, GameInfo.TableSize);

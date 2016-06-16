@@ -1,4 +1,6 @@
-﻿namespace SlidingPuzzle.Models
+﻿using System;
+
+namespace SlidingPuzzle.Models
 {
     public class GameInfo
     {
@@ -13,6 +15,12 @@
         /// </summary>
         /// <value>The size of the table.</value>
         public int TableSize { get; set; }
+
+        /// <summary>
+        /// Gets the tiles count.
+        /// </summary>
+        /// <value>The tiles count.</value>
+        public int TilesCount { get { return (int)Math.Pow(TableSize, 2); } }
 
         /// <summary>
         /// Gets or sets the moves.

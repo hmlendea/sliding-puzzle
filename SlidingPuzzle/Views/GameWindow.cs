@@ -120,7 +120,7 @@ namespace SlidingPuzzle.Views
 
                         Rectangle tileRectangle = new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
 
-                        if (tile.Number != (int)Math.Pow(game.GameInfo.TableSize, 2))
+                        if (tile.Number != game.GameInfo.TilesCount)
                         {
                             g.FillRectangle(Brushes.Black, tileRectangle); // TODO: Draw image piece instead
                             g.DrawString(tile.Number.ToString(), font, Brushes.IndianRed, tileRectangle, strFormat);
