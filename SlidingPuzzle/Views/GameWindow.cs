@@ -60,36 +60,30 @@ namespace SlidingPuzzle.Views
 
         protected void OnKeyPressEvent(object o, KeyPressEventArgs args)
         {
-            bool validKeyPressed = false;
-
             switch (args.Event.Key)
             {
                 case Gdk.Key.w:
                 case Gdk.Key.W:
                 case Gdk.Key.Up:
                     game.MoveTile(0, -1);
-                    validKeyPressed = true;
                     break;
 
                 case Gdk.Key.a:
                 case Gdk.Key.A:
                 case Gdk.Key.Left:
                     game.MoveTile(-1, 0);
-                    validKeyPressed = true;
                     break;
 
                 case Gdk.Key.s:
                 case Gdk.Key.S:
                 case Gdk.Key.Down:
                     game.MoveTile(0, 1);
-                    validKeyPressed = true;
                     break;
 
                 case Gdk.Key.d:
                 case Gdk.Key.D:
                 case Gdk.Key.Right:
                     game.MoveTile(1, 0);
-                    validKeyPressed = true;
                     break;
             }
 
@@ -98,7 +92,6 @@ namespace SlidingPuzzle.Views
 
         void DrawTable()
         {
-            Console.WriteLine("sasa");
             Gdk.Drawable drawable = GameDrawArea.GdkWindow;
             int tableWidth, tableHeight, tileWidth, tileHeight;
 
@@ -130,7 +123,7 @@ namespace SlidingPuzzle.Views
                             g.DrawString(tile.Number.ToString(), font, Brushes.IndianRed, tileRectangle, strFormat);
                         }
                         else
-                            g.FillRectangle(Brushes.Gray, tileRectangle); // TODO: Draw image piece instead
+                            g.FillRectangle(Brushes.Gray, tileRectangle);
                     }
             }
         }
