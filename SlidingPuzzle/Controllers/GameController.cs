@@ -82,8 +82,8 @@ namespace SlidingPuzzle.Controllers
                 int x2 = rnd.Next(0, GameInfo.TableSize);
                 int y2 = rnd.Next(0, GameInfo.TableSize);
 
-                if ((x1 != GameInfo.TableSize - 1 && y1 != GameInfo.TableSize - 1) ||
-                    (x2 != GameInfo.TableSize - 1 && y2 != GameInfo.TableSize - 1))
+                if ((x1 != GameInfo.TableSize - 1 || y1 != GameInfo.TableSize - 1) &&
+                    (x2 != GameInfo.TableSize - 1 || y2 != GameInfo.TableSize - 1))
                 {
                     Tile tile1 = repository.Get(x1, y1);
                     Tile tile2 = repository.Get(x2, y2);
