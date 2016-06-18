@@ -148,6 +148,8 @@ namespace SlidingPuzzle.Views
                         }
                         else
                             g.FillRectangle(Brushes.Gray, desRectangle);
+                        
+                        g.DrawRectangle(Pens.Black, desRectangle);
                     }
             }
         }
