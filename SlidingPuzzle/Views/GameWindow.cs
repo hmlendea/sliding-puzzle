@@ -7,22 +7,25 @@ using Gtk;
 using SlidingPuzzle.Models;
 using SlidingPuzzle.Controllers;
 
+using Image = System.Drawing.Image;
+
 namespace SlidingPuzzle.Views
 {
     public partial class GameWindow : Window
     {
         GameController game;
+        Image image;
 
         public GameWindow()
             : base(WindowType.Toplevel)
         {
             Build();
             GameDrawArea.DoubleBuffered = true;
-            game = new GameController(3);
 
             GameDrawArea.ExposeEvent += delegate
             {
-                DrawTable();
+                if (game != null)
+                    DrawTable();
             };
         }
 
@@ -42,7 +45,7 @@ namespace SlidingPuzzle.Views
             FileChooserDialog dialog = new FileChooserDialog(
                                            "Choose an image", this, FileChooserAction.Open,
                                            "Cancel", ResponseType.Cancel,
-                                           "Select", ResponseType.Ok);
+                                           "Select", ResponseType.Accept);
             
             dialog.Filter = new FileFilter();
             dialog.Filter.AddPattern("*.png");
@@ -52,7 +55,8 @@ namespace SlidingPuzzle.Views
 
             if (dialog.Run() == (int)ResponseType.Accept)
             {
-                // TODO: Load the image
+                LoadImage(dialog.Filename);
+                StartGame(3);
             }
 
             dialog.Destroy();
@@ -90,6 +94,22 @@ namespace SlidingPuzzle.Views
             DrawTable();
         }
 
+        void StartGame(int tableSize)
+        {
+            game = new GameController(tableSize);
+            DrawTable();
+        }
+
+        void LoadImage(string path)
+        {
+            Image original = Image.FromFile(path);
+            int width, height;
+
+            GameDrawArea.GdkWindow.GetSize(out width, out height);
+
+            image = new Bitmap(original, new Size(width, height));
+        }
+
         void DrawTable()
         {
             Gdk.Drawable drawable = GameDrawArea.GdkWindow;
@@ -115,15 +135,19 @@ namespace SlidingPuzzle.Views
                     {
                         Tile tile = game.GetTile(x, y);
 
-                        Rectangle tileRectangle = new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+                        Rectangle desRectangle = new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+                        Rectangle srcRectangle = new Rectangle(
+                                                     (tile.Number - 1) % game.GameInfo.TableSize * tileWidth,
+                                                     (tile.Number - 1) / game.GameInfo.TableSize * tileHeight,
+                                                     desRectangle.Width, desRectangle.Height);
 
                         if (tile.Number != game.GameInfo.TilesCount)
                         {
-                            g.FillRectangle(Brushes.Black, tileRectangle); // TODO: Draw image piece instead
-                            g.DrawString(tile.Number.ToString(), font, Brushes.IndianRed, tileRectangle, strFormat);
+                            g.DrawImage(image, desRectangle.X, desRectangle.Y, srcRectangle, GraphicsUnit.Pixel);
+                            g.DrawString(tile.Number.ToString(), font, Brushes.IndianRed, desRectangle, strFormat);
                         }
                         else
-                            g.FillRectangle(Brushes.Gray, tileRectangle);
+                            g.FillRectangle(Brushes.Gray, desRectangle);
                     }
             }
         }

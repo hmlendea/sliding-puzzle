@@ -71,8 +71,8 @@ namespace SlidingPuzzle.Controllers
         {
             int k = 1;
 
-            for (int x = 0; x < GameInfo.TableSize; x++)
-                for (int y = 0; y < GameInfo.TableSize; y++)
+            for (int y = 0; y < GameInfo.TableSize; y++)
+                for (int x = 0; x < GameInfo.TableSize; x++)
                 {
                     Tile tile = new Tile
                     {
@@ -100,12 +100,9 @@ namespace SlidingPuzzle.Controllers
                 int x2 = rnd.Next(0, GameInfo.TableSize);
                 int y2 = rnd.Next(0, GameInfo.TableSize);
 
-                Console.WriteLine("  {0}: {1} {2} {3} {4}", GameInfo.TableSize - 1, x1, y1, x2, y2);
                 if ((x1 == GameInfo.TableSize - 1 && y1 == GameInfo.TableSize - 1) ||
                     (x2 == GameInfo.TableSize - 1 && y2 == GameInfo.TableSize - 1))
                 {
-                    Console.WriteLine(". {0}: {1} {2} {3} {4}", GameInfo.TableSize - 1, x1, y1, x2, y2);
-
                     i -= 1;
                     continue;
                 }
@@ -118,12 +115,6 @@ namespace SlidingPuzzle.Controllers
         {
             Tile tile1 = repository.Get(x1, y1);
             Tile tile2 = repository.Get(x2, y2);
-
-            if (tile1.Number == 9 || tile2.Number == 9)
-            {
-
-                Console.WriteLine("> {0}: {1} {2} {3} {4}", GameInfo.TableSize - 1, x1, y1, x2, y2);
-            }
 
             int aux = tile1.Number;
             tile1.Number = tile2.Number;
