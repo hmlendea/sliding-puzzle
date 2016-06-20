@@ -129,6 +129,7 @@ namespace SlidingPuzzle.Views
             using (Graphics g = Gtk.DotNet.Graphics.FromDrawable(GameDrawArea.GdkWindow))
             {
                 g.SmoothingMode = SmoothingMode.AntiAlias;
+                g.FillRectangle(Brushes.Black, 0, 0, tableWidth, tableHeight);
 
                 for (int y = 0; y < game.GameInfo.TableSize; y++)
                     for (int x = 0; x < game.GameInfo.TableSize; x++)
