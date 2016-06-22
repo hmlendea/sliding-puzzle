@@ -15,17 +15,40 @@
         <property name="Label" translatable="yes">Game</property>
         <property name="ShortLabel" translatable="yes">Game</property>
       </action>
-      <action id="NewAction">
+      <action id="NewGameAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">New</property>
         <property name="ShortLabel" translatable="yes">New</property>
-        <signal name="Activated" handler="OnNewActionActivated" />
       </action>
       <action id="RetryAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Retry</property>
         <property name="ShortLabel" translatable="yes">Retry</property>
         <signal name="Activated" handler="OnRetryActionActivated" />
+      </action>
+      <action id="GameSize3Action">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">3x3</property>
+        <property name="ShortLabel" translatable="yes">3x3</property>
+        <signal name="Activated" handler="OnGameSize3ActionActivated" />
+      </action>
+      <action id="GameSize4Action">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">4x4</property>
+        <property name="ShortLabel" translatable="yes">4x4</property>
+        <signal name="Activated" handler="OnGameSize4ActionActivated" />
+      </action>
+      <action id="GameSize5Action">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">5x5</property>
+        <property name="ShortLabel" translatable="yes">5x5</property>
+        <signal name="Activated" handler="OnGameSize5ActionActivated" />
+      </action>
+      <action id="GameSize8Action">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">8x8</property>
+        <property name="ShortLabel" translatable="yes">8x8</property>
+        <signal name="Activated" handler="OnGameSize8ActionActivated" />
       </action>
     </action-group>
     <property name="MemberName" />
@@ -43,7 +66,11 @@
             <property name="MemberName" />
             <node name="GameMenuBar" type="Menubar">
               <node type="Menu" action="GameAction">
-                <node type="Menuitem" action="NewAction" />
+                <node type="Menu" action="NewGameAction">
+                  <node type="Menuitem" action="GameSize3Action" />
+                  <node type="Menuitem" action="GameSize4Action" />
+                  <node type="Menuitem" action="GameSize5Action" />
+                </node>
                 <node type="Menuitem" action="RetryAction" />
               </node>
             </node>

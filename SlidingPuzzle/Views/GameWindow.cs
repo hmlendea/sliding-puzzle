@@ -35,18 +35,14 @@ namespace SlidingPuzzle.Views
             a.RetVal = true;
         }
 
-        protected void OnRetryActionActivated(object sender, EventArgs e)
+        Image ChooseImage()
         {
-            throw new NotImplementedException();
-        }
 
-        protected void OnNewActionActivated(object sender, EventArgs e)
-        {
             FileChooserDialog dialog = new FileChooserDialog(
                                            "Choose an image", this, FileChooserAction.Open,
                                            "Cancel", ResponseType.Cancel,
                                            "Select", ResponseType.Accept);
-            
+
             dialog.Filter = new FileFilter();
             dialog.Filter.AddPattern("*.png");
             dialog.Filter.AddPattern("*.jpg");
@@ -55,48 +51,21 @@ namespace SlidingPuzzle.Views
 
             if (dialog.Run() == (int)ResponseType.Accept)
             {
-                LoadImage(dialog.Filename);
-                StartGame(3);
+                string path = dialog.Filename;
+                dialog.Destroy();
+
+                return Image.FromFile(path);
             }
 
             dialog.Destroy();
-        }
-
-        protected void OnKeyPressEvent(object o, KeyPressEventArgs args)
-        {
-            switch (args.Event.Key)
-            {
-                case Gdk.Key.w:
-                case Gdk.Key.W:
-                case Gdk.Key.Up:
-                    game.MoveTile(0, -1);
-                    break;
-
-                case Gdk.Key.a:
-                case Gdk.Key.A:
-                case Gdk.Key.Left:
-                    game.MoveTile(-1, 0);
-                    break;
-
-                case Gdk.Key.s:
-                case Gdk.Key.S:
-                case Gdk.Key.Down:
-                    game.MoveTile(0, 1);
-                    break;
-
-                case Gdk.Key.d:
-                case Gdk.Key.D:
-                case Gdk.Key.Right:
-                    game.MoveTile(1, 0);
-                    break;
-            }
-
-            DrawTable();
+            return null;
         }
 
         void StartGame(int tableSize)
         {
             game = new GameController(tableSize);
+            image = ChooseImage();
+
             DrawTable();
         }
 
@@ -153,6 +122,58 @@ namespace SlidingPuzzle.Views
                         g.DrawRectangle(Pens.Black, desRectangle);
                     }
             }
+        }
+
+        protected void OnRetryActionActivated(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void OnKeyPressEvent(object o, KeyPressEventArgs args)
+        {
+            switch (args.Event.Key)
+            {
+                case Gdk.Key.w:
+                case Gdk.Key.W:
+                case Gdk.Key.Up:
+                    game.MoveTile(0, -1);
+                    break;
+
+                case Gdk.Key.a:
+                case Gdk.Key.A:
+                case Gdk.Key.Left:
+                    game.MoveTile(-1, 0);
+                    break;
+
+                case Gdk.Key.s:
+                case Gdk.Key.S:
+                case Gdk.Key.Down:
+                    game.MoveTile(0, 1);
+                    break;
+
+                case Gdk.Key.d:
+                case Gdk.Key.D:
+                case Gdk.Key.Right:
+                    game.MoveTile(1, 0);
+                    break;
+            }
+
+            DrawTable();
+        }
+
+        protected void OnGameSize3ActionActivated(object sender, EventArgs e)
+        {
+            StartGame(3);
+        }
+
+        protected void OnGameSize4ActionActivated(object sender, EventArgs e)
+        {
+            StartGame(4);
+        }
+
+        protected void OnGameSize5ActionActivated(object sender, EventArgs e)
+        {
+            StartGame(5);
         }
     }
 }
