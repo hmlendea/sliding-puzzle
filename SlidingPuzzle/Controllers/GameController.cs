@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using SlidingPuzzle.Models;
 using SlidingPuzzle.Repositories;
@@ -17,6 +18,7 @@ namespace SlidingPuzzle.Controllers
         public GameInfo GameInfo { get; private set; }
 
         TileRepository repository;
+        Random random;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SlidingPuzzle.Controllers.GameController"/> class.
@@ -31,6 +33,7 @@ namespace SlidingPuzzle.Controllers
             };
 
             repository = new TileRepository();
+            random = new Random();
 
             InitializeTable();
             ShuffleTable();
@@ -89,26 +92,52 @@ namespace SlidingPuzzle.Controllers
 
         void ShuffleTable()
         {
-            int i;
-            Random rnd = new Random();
+            for (int i = 0; i < GameInfo.TilesCount; i++)
+                DoRandomSwap();
 
-            for (i = 0; i < GameInfo.TilesCount; i++)
+            if (GameInfo.TableSize % 2 != 0)
+                while (GetNumberOfInversions() % 2 != 0)
+                    DoRandomSwap();
+            else
             {
-                int x1 = rnd.Next(0, GameInfo.TableSize);
-                int y1 = rnd.Next(0, GameInfo.TableSize);
+                Tile blank = repository.Get(GameInfo.TilesCount);
 
-                int x2 = rnd.Next(0, GameInfo.TableSize);
-                int y2 = rnd.Next(0, GameInfo.TableSize);
-
-                if ((x1 == GameInfo.TableSize - 1 && y1 == GameInfo.TableSize - 1) ||
-                    (x2 == GameInfo.TableSize - 1 && y2 == GameInfo.TableSize - 1))
-                {
-                    i -= 1;
-                    continue;
-                }
-
-                SwapTiles(x1, y1, x2, y2);
+                while (GetNumberOfInversions() % 2 == blank.Y % 2)
+                    DoRandomSwap();
             }
+        }
+
+        int GetNumberOfInversions()
+        {
+            List<Tile> tiles = repository.GetAll();
+            int inversions = 0;
+
+
+            for (int i = 0; i < tiles.Count; i++)
+            {
+                int current = tiles[i].Number;
+
+                if (current == GameInfo.TilesCount)
+                    continue;
+
+                for (int j = i; j < tiles.Count; j++)
+                    if (tiles[i].Number != GameInfo.TilesCount)
+                    if (current > tiles[j].Number)
+                        inversions += 1;
+            }
+
+            return inversions;
+        }
+
+        void DoRandomSwap()
+        {
+            int x1 = random.Next(0, GameInfo.TableSize);
+            int y1 = random.Next(0, GameInfo.TableSize);
+
+            int x2 = random.Next(0, GameInfo.TableSize);
+            int y2 = random.Next(0, GameInfo.TableSize);
+
+            SwapTiles(x1, y1, x2, y2);
         }
 
         void SwapTiles(int x1, int y1, int x2, int y2)
