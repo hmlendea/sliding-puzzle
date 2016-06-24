@@ -159,6 +159,9 @@ namespace SlidingPuzzle.Views
             }
 
             DrawTable();
+
+            if (game.Completed)
+                StartGame(game.GameInfo.TableSize);
         }
 
         protected void OnGameSize3ActionActivated(object sender, EventArgs e)

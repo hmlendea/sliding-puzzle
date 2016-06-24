@@ -17,6 +17,12 @@ namespace SlidingPuzzle.Controllers
         /// <value>The game info.</value>
         public GameInfo GameInfo { get; private set; }
 
+        /// <summary>
+        /// Gets a value indicating whether thie game is completed.
+        /// </summary>
+        /// <value><c>true</c> if completed; otherwise, <c>false</c>.</value>
+        public bool Completed { get { return GetNumberOfInversions() == 0; } }
+
         TileRepository repository;
         Random random;
 
